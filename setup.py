@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(
-    name = "remocolab.py",
+    name = "rdm.py",
     version = "0.1",
-    py_modules = ['remocolab'],
-    url = "https://github.com/demotomohiro/remocolab",
+    py_modules = ['rdm'],
+    url = "https://github.com/ABHax101/colab",
     author = "demotomohiro",
     install_requires = ["pyngrok"]
 )
