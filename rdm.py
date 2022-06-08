@@ -145,7 +145,7 @@ def _setupSSHDImpl(public_key, tunnel, ngrok_token, ngrok_region, mount_gdrive_t
 
   #Prevent ssh session disconnection.
   with open("/etc/ssh/sshd_config", "a") as f:
-    f.write("\n\n# Options added by remocolab\n")
+    f.write("\n\n# Options added by rdm\n")
     f.write("ClientAliveInterval 120\n")
     if public_key != None:
       f.write("PasswordAuthentication no\n")
@@ -240,7 +240,7 @@ def _setupSSHDMain(public_key, tunnel, ngrok_region, check_gpu_available, mount_
   if tunnel == None:
     print("As ngrok doesn't work on colab for long time, default tunnel method has been changed to Argo tunnel.")
     print("Please read this for more details:")
-    print("https://github.com/demotomohiro/remocolab/blob/master/README.md")
+    print("https://github.com/ABHax101/colab/blob/master/README.md")
     tunnel = "argotunnel"
 
   avail_tunnels = {"ngrok", "argotunnel"}
@@ -268,7 +268,7 @@ def _setupSSHDMain(public_key, tunnel, ngrok_region, check_gpu_available, mount_
     print("It seems Google is blocking ngrok.")
     print("If you got error 'kex_exchange_identification: Connection closed by remote host' when you login to ssh, you need to use Argo Tunnel instead of ngrok.")
     print("Please read this for more details:")
-    print("https://github.com/demotomohiro/remocolab/blob/master/README.md")
+    print("https://github.com/ABHax101/colab/blob/master/README.md")
     print("---")
     print("Copy&paste your tunnel authtoken from https://dashboard.ngrok.com/auth")
     print("(You need to sign up for ngrok and login,)")
@@ -349,7 +349,7 @@ def _setup_nvidia_gl():
   # You can create /dev/tty0 with "mknod /dev/tty0 c 4 0" but you will get permision denied error.
   subprocess.Popen(["Xorg", "-seat", "seat-1", "-allowMouseOpenFail", "-novtswitch", "-nolisten", "tcp"])
 
-def _setupVNC():
+def _initRDM():
   libjpeg_ver = "2.0.5"
   virtualGL_ver = "2.6.4"
   turboVNC_ver = "2.2.5"
@@ -417,9 +417,9 @@ subprocess.run(
                     universal_newlines = True)
   return r.stdout
 
-def setupVNC(ngrok_region = None, check_gpu_available = True, tunnel = None, mount_gdrive_to = None, mount_gdrive_from = None, public_key = None):
+def initRDM(ngrok_region = None, check_gpu_available = True, tunnel = None, mount_gdrive_to = None, mount_gdrive_from = None, public_key = None):
   stat, msg = _setupSSHDMain(public_key, tunnel, ngrok_region, check_gpu_available, mount_gdrive_to, mount_gdrive_from, True)
   if stat:
-    msg += _setupVNC()
+    msg += _initRDM()
 
   print(msg)
